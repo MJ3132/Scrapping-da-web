@@ -36,6 +36,15 @@ mongoose.connect(MONGODB_URI);
 
 // Routes
 
+// display homepage 
+app.get('/', function (req,res){
+
+    res.render('index');
+  })
+  
+
+
+
 // on click the scrape button we get  all article contents and we render them on the index handlebars
 
 app.get("/scrapedData", function (req, res) {
@@ -61,27 +70,23 @@ app.get("/scrapedData", function (req, res) {
             results.text = $(this).find("div.grid__wrapper__card__text__summary").text();
             // console.log(results.text);
 
-            console.log(results);
             db.Article.create(results)
                 .then(function (dbArticle) {
                     console.log(dbArticle);
                 })
-               
+
+                .catch(function(err){
+                    return res.json(err);
+                }); 
          });
   
+         // render results into index handlebars
     res.render('index', results)
-    });
+    })
 
-
-
-//Home page
-
-app.get('/', function (req,res){
-
-    res.render('index');
-  })
   
 
+});
 
 app.get("/articles", function (req, res) {
 
