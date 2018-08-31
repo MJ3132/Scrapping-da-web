@@ -1,0 +1,47 @@
+<nav class="navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <div class="navbar header">
+            <a href="#" class="navbar-brand">The Newsletter Scrapper</a>
+        </div>
+
+        {{!-- Menu Items --}}
+        <div>
+            <ul class="nav navbar nav">
+                <li class="active">
+                    <a href="/">Home</a>
+                </li>
+                <li class="active">
+                    <a href="#">Saved Articles</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<class="jumbotron">
+    <h1> Saved Articles </h1>
+    </class>
+    {{#each savedArticles}}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{savedArticles.title}}</h5>
+                        <p class="card-text">{{savedArticles.text}}</p>
+                        <a href="#" id="save-button" data-id={{savedArticles._id}} class="btn btn-primary">Save Article</a>
+                        <a href="/articles/{{savedArticles._id}}" id="open-modal"  class="btn btn-primary">Leave a comment</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+{{!-- show all saved Articles with their notes if they have any --}}
