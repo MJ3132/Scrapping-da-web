@@ -5,17 +5,18 @@ var Schema = mongoose.Schema;
 
 var NoteSchema = new Schema({
 
+    _articleId: {
+        type: Schema.Types.ObjectId,
+        ref: "Article"
+    },
 
-
-
-
-    text: {
-    type: String,
-    }
+    noteText: String,
+    date: String
+    
 });
 
 
-var Note = mongoose.model("note", NoteSchema);
+var Note = mongoose.model("Note", NoteSchema);
 
 
 
