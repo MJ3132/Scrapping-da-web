@@ -1,49 +1,40 @@
 
+// Require our dependencies
 var express = require("express");
-var bodyParser = require("body-parser");
-var logger = require("morgan");
 var mongoose = require("mongoose");
-
 var exphbs = require("express-handlebars");
-var path = require('path');
+var bodyParser = require("body-parser");
 
-//default index.js
-var db = require("./models");
-var PORT = 3000;
+// Set up our port to be either the host's designated port, or 3000
+var PORT = process.env.PORT || 3000;
+
+// Instantiate our Express App
 var app = express();
 
-// middleware (json parsing)
+// Require our routes
+var routes = require("./routes");
 
-app.use(logger("dev"));
+// Designate our public folder as a static directory
+app.use(express.static("public"));
 
-// body parser for handling submissions
-
-app.use(bodyParser.urlencoded({useNewUrlParser: true}));
-app.use(bodyParser.json()); 
-app.use(express.static(__dirname + "/public"));
-
-//handlebars
-
+// Connect Handlebars to our Express app
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-app.set("views", path.join(__dirname , "views"))
 
+// Use bodyParser in our app
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/SCRAPPING-DA-WEB";
+// Have every request go through our route middleware
+app.use("/", routes);
 
-// Routes
-var router = express.Router();
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrape-da-web";
 
+// Connect to the Mongo DB
+mongoose.connect(MONGODB_URI);
 
-require("./config/routes")(router);
-
-app.use(router);
-
-
-
-app.listen(PORT, function () {
-    mongoose.connect(MONGODB_URI);
-
-    console.log("App running on port " + PORT);
-
+// Listen on the port
+app.listen(PORT, function() {
+  console.log("Listening on port: " + PORT);
 });

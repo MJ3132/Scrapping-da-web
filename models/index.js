@@ -2,7 +2,7 @@
 
 module.exports = {
 
-    Article : require('./article'),
-    Note : require('./note')
+    Headline : require('./Headline'),
+    Note : require('./Note')
 
 }

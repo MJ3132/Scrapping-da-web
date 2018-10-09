@@ -25,20 +25,26 @@ var scrape = function(cb) {
              var text = $(this).find("div.grid__wrapper__card__text__summary").text().trim();
             // console.log(results.text);
 
-            if(title && link && text){
+            if(title !==""  && link !==""  && text !=="" ){
 
                 var dataToAdd = {
-                    title: title,
-                    text : text,
-                    link : link
+                    headline: title,
+                    summary : text,
+                    url : link
                 }
+
+
+
+
                 articles.push(dataToAdd);
             }
+
+
+
         });
 
         cb(articles);
 
-      
      
     });
 };
